@@ -5,6 +5,7 @@ import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { WebpackPluginInstance } from 'webpack';
+import { RewriteHtmlUrlsPlugin } from '../rewrite-html-urls-plugin';
 import { Context } from './context';
 
 export function getPlugins(context: Context) {
@@ -14,30 +15,41 @@ export function getPlugins(context: Context) {
             filename: 'stylesheets/style.css',
             ignoreOrder: true,
         }) as WebpackPluginInstance,
+        new RewriteHtmlUrlsPlugin(context),
         ...getHtmlPlugins(context),
         ...buildPlugins(context),
     ];
 }
 
 function buildPlugins(context: Context) {
+    const output = context.publicPath.startsWith('.')
+        ? `./docs/${context.publicPath.slice(1)}`
+        : `./docs/${context.publicPath}`
+
     return [
         new CopyWebpackPlugin({
             patterns: [{
                 noErrorOnMissing: true,
                 from: path.resolve(context.cwd, './static'),
-                to: path.resolve(context.cwd, `./docs${context.publicPath}`),
+                to: path.resolve(context.cwd, output),
             }],
         }),
     ];
 }
 
 function getHtmlPlugins(context: Context) {
-    const pagesFolder = path.resolve(context.sourcesPath, './pages/');
-    const pages = fs.readdirSync(pagesFolder)
-        .filter((filename) => path.extname(filename) === '.pug');
+    try {
+        const pagesFolder = path.resolve(context.sourcesPath, './pages/');
+        const pages = fs.readdirSync(pagesFolder)
+            .filter((filename) => path.extname(filename) === '.pug');
 
-    return pages.map((filename) => new HTMLWebpackPlugin({
-        filename: path.basename(filename, path.extname(filename)) + '.html',
-        template: path.resolve(pagesFolder, `./${filename}`),
-    }));
+        return pages.map((filename) => new HTMLWebpackPlugin({
+            filename: path.basename(filename, path.extname(filename)) + '.html',
+            template: path.resolve(pagesFolder, `./${filename}`),
+            publicPath: context.publicPath.startsWith('/') ? '/' : './',
+        }));
+    } catch (error) {
+        if (error.code === 'ENOENT') return [];
+        throw error;
+    }
 }
