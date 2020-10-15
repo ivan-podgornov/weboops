@@ -17,6 +17,6 @@ export type Context = {
 
 export const resolveContext = (mode: WeboopsMode): Context => {
     const cwd = process.cwd();
-    const sourcesPath = path.resolve(__dirname, '../../example/source');
+    const sourcesPath = path.resolve(cwd, './source/');
     return { cwd, mode, sourcesPath };
 };

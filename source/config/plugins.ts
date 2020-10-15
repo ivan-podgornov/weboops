@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -14,7 +15,19 @@ export function getPlugins(context: Context) {
             ignoreOrder: true,
         }) as WebpackPluginInstance,
         ...getHtmlPlugins(context),
-    ]
+        ...buildPlugins(context),
+    ];
+}
+
+function buildPlugins(context: Context) {
+    return [
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: path.resolve(context.cwd, './static'),
+                to: path.resolve(context.cwd, './docs'),
+            }],
+        }),
+    ];
 }
 
 function getHtmlPlugins(context: Context) {

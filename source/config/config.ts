@@ -21,7 +21,7 @@ export const createConfig = (mode: WeboopsMode): Configuration => {
 
         output: {
             filename: 'scripts/[name].js',
-            path: path.resolve(sourcesPath, '../public/'),
+            path: path.resolve(sourcesPath, '../docs/'),
             publicPath: '/',
         },
 
