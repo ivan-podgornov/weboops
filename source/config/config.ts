@@ -1,17 +1,19 @@
+import { resolveContext, WeboopsMode } from './context';
 import path from 'path';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import type { Configuration, WebpackPluginInstance } from 'webpack';
 
-export const createConfig = (): Configuration => {
-    const cwd = path.resolve(process.cwd(), './source/');
+export const createConfig = (mode: WeboopsMode): Configuration => {
+    const context = resolveContext(mode);
+    const { cwd, sourcesPath } = context;
 
     return {
         mode: 'development',
 
         entry: {
-            styles: path.resolve(cwd, './stylesheets/style.css'),
+            styles: path.resolve(sourcesPath, './stylesheets/style.css'),
         },
 
         optimization: {
@@ -20,11 +22,22 @@ export const createConfig = (): Configuration => {
 
         output: {
             filename: 'scripts/[name].js',
-            path: path.resolve(cwd, '../public/'),
+            path: path.resolve(sourcesPath, '../public/'),
+            publicPath: '/',
         },
 
         module: {
             rules: [
+                {
+                    test: /\.(svg|png|jpe?g)$/,
+                    use: {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                            path: 'images',
+                        },
+                    },
+                },
                 {
                     test: /\.pug$/,
                     use: {
@@ -38,7 +51,12 @@ export const createConfig = (): Configuration => {
                     test: /\.css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
-                        'css-loader'
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                url: (url: string) => !url.startsWith('/'),
+                            },
+                        },
                     ],
                 },
             ],
@@ -48,7 +66,7 @@ export const createConfig = (): Configuration => {
             new CleanWebpackPlugin(),
             new HTMLWebpackPlugin({
                 filename: 'index.html',
-                template: path.resolve(cwd, './pages/index.pug'),
+                template: path.resolve(sourcesPath, './pages/index.pug'),
             }),
             new MiniCssExtractPlugin({
                 filename: 'stylesheets/style.css',
@@ -58,14 +76,14 @@ export const createConfig = (): Configuration => {
 
         resolve: {
             alias: {
-                components: path.resolve(cwd, './components/'),
-                layouts: path.resolve(cwd, './layouts/'),
-                pages: path.resolve(cwd, './pages/'),
+                components: path.resolve(sourcesPath, './components/'),
+                layouts: path.resolve(sourcesPath, './layouts/'),
+                pages: path.resolve(sourcesPath, './pages/'),
             },
         },
 
         devServer: {
-            contentBase: path.resolve(cwd, '../static/'),
+            contentBase: path.resolve(cwd, './static/'),
         },
     };
 };

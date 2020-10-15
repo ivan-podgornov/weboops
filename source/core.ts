@@ -1,9 +1,10 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { createConfig } from './config';
+import { WeboopsMode } from './config/context';
 
-export const run = (mode: 'build'|'development') => {
-    const config = createConfig();
+export const run = (mode: WeboopsMode) => {
+    const config = createConfig(mode);
     const compiler = webpack(config);
 
     switch (mode) {
