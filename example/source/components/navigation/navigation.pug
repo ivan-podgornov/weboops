@@ -1,0 +1,7 @@
+mixin navigation()
+    nav.navigation
+        ul.navigation__list
+            - const links = ['Главная', 'О нас', 'Контакты'];
+            each link in links
+                li.navigation__item
+                    a.navigation__link(href="#") #{link}

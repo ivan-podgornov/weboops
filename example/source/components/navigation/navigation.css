@@ -1,0 +1,18 @@
+.navigation__list {
+    margin: 0;
+    padding: 0;
+}
+
+.navigation__item {
+    display: inline-block;
+    vertical-align: middle;
+    list-style-type: none;
+}
+
+.navigation__link {
+    display: inline-block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: 0.2s color ease;
+}
