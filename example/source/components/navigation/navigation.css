@@ -16,3 +16,11 @@
     text-decoration: none;
     transition: 0.2s color ease;
 }
+
+.navigation__link:first-of-type {
+    padding-left: 20px;
+    background-image: url('./assets/home.svg');
+    background-position: center left;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}

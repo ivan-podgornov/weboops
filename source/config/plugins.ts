@@ -23,8 +23,9 @@ function buildPlugins(context: Context) {
     return [
         new CopyWebpackPlugin({
             patterns: [{
+                noErrorOnMissing: true,
                 from: path.resolve(context.cwd, './static'),
-                to: path.resolve(context.cwd, './docs'),
+                to: path.resolve(context.cwd, `./docs${context.publicPath}`),
             }],
         }),
     ];

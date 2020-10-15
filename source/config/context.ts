@@ -5,6 +5,9 @@ export type Context = {
     /** Path where user run weboops */
     cwd: string,
 
+    /** Path that will be used for webpack public path */
+    publicPath: string,
+
     /**
      * build - just build sources to output
      * development - build source and watch for changes
@@ -15,8 +18,18 @@ export type Context = {
     sourcesPath: string,
 };
 
-export const resolveContext = (mode: WeboopsMode): Context => {
+export type Options = {
+    mode: WeboopsMode,
+    publicPath: string,
+}
+
+export const resolveContext = (options: Options): Context => {
     const cwd = process.cwd();
     const sourcesPath = path.resolve(cwd, './source/');
-    return { cwd, mode, sourcesPath };
+
+    return {
+        ...options,
+        cwd,
+        sourcesPath,
+    };
 };

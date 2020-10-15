@@ -1,21 +1,23 @@
+import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Context } from './context';
 
-export function getLoaders() {
+export function getLoaders(context: Context) {
     return [
-        files(),
+        files(context),
         pug(),
         css(),
     ];
 };
 
-function files() {
+function files(context: Context) {
     return {
         test: /\.(svg|png|jpe?g)$/,
         use: {
             loader: 'file-loader',
             options: {
                 name: '[path][name].[ext]',
-                path: 'images',
+                outputPath: 'img',
             },
         },
     };

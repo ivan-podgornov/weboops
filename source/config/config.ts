@@ -1,11 +1,11 @@
 import path from 'path';
-import { resolveContext, WeboopsMode } from './context';
+import { resolveContext, Options } from './context';
 import { getLoaders } from './loaders';
 import { getPlugins } from './plugins';
 import type { Configuration } from 'webpack';
 
-export const createConfig = (mode: WeboopsMode): Configuration => {
-    const context = resolveContext(mode);
+export const createConfig = (options: Options): Configuration => {
+    const context = resolveContext(options);
     const { cwd, sourcesPath } = context;
 
     return {
@@ -22,11 +22,11 @@ export const createConfig = (mode: WeboopsMode): Configuration => {
         output: {
             filename: 'scripts/[name].js',
             path: path.resolve(sourcesPath, '../docs/'),
-            publicPath: '/',
+            publicPath: options.publicPath,
         },
 
         module: {
-            rules: getLoaders(),
+            rules: getLoaders(context),
         },
 
         plugins: getPlugins(context),

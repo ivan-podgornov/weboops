@@ -1,13 +1,13 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { createConfig } from './config';
-import { WeboopsMode } from './config/context';
+import { Options } from './config/context';
 
-export const run = (mode: WeboopsMode) => {
-    const config = createConfig(mode);
+export const run = (options: Options) => {
+    const config = createConfig(options);
     const compiler = webpack(config);
 
-    switch (mode) {
+    switch (options.mode) {
         case 'build': {
             compiler.run((error, stats) => {
                 if (error) {
