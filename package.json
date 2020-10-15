@@ -7,13 +7,9 @@
     "weboops": "dist/cli.js"
   },
   "scripts": {
-    "prebuild": "npm run compile",
-    "build": "node dist/cli.js --mode build",
-    "clean": "rimraf dist",
-    "compile": "npm run clean & tsc -p tsconfig.json",
-    "dev": "npm run compile && node dist/cli.js --mode development",
-    "prestart": "npm run compile",
-    "prepublishOnly": "npm run compile"
+    "prebuild": "rimraf dist",
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0",

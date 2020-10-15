@@ -1,9 +1,8 @@
-import { resolveContext, WeboopsMode } from './context';
 import path from 'path';
-import HTMLWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import type { Configuration, WebpackPluginInstance } from 'webpack';
+import { resolveContext, WeboopsMode } from './context';
+import { getLoaders } from './loaders';
+import { getPlugins } from './plugins';
+import type { Configuration } from 'webpack';
 
 export const createConfig = (mode: WeboopsMode): Configuration => {
     const context = resolveContext(mode);
@@ -27,52 +26,10 @@ export const createConfig = (mode: WeboopsMode): Configuration => {
         },
 
         module: {
-            rules: [
-                {
-                    test: /\.(svg|png|jpe?g)$/,
-                    use: {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[path][name].[ext]',
-                            path: 'images',
-                        },
-                    },
-                },
-                {
-                    test: /\.pug$/,
-                    use: {
-                        loader: 'pug-loader',
-                        options: {
-                            pretty: true,
-                        },
-                    },
-                },
-                {
-                    test: /\.css$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: (url: string) => !url.startsWith('/'),
-                            },
-                        },
-                    ],
-                },
-            ],
+            rules: getLoaders(),
         },
 
-        plugins: [
-            new CleanWebpackPlugin(),
-            new HTMLWebpackPlugin({
-                filename: 'index.html',
-                template: path.resolve(sourcesPath, './pages/index.pug'),
-            }),
-            new MiniCssExtractPlugin({
-                filename: 'stylesheets/style.css',
-                ignoreOrder: true,
-            }) as WebpackPluginInstance,
-        ],
+        plugins: getPlugins(context),
 
         resolve: {
             alias: {
