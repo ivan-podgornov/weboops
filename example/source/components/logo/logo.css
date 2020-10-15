@@ -1,0 +1,15 @@
+.logo {
+    color: inherit;
+    text-decoration: none;
+}
+
+.logo__image,
+.logo__text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo__image {
+    height: 42px;
+    width: 42px;
+}

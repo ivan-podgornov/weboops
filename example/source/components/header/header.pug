@@ -1,6 +1,8 @@
+include ../logo/logo
 include ../navigation/navigation
+include ../positioner/positioner
 
 mixin header
-    header.page-header
-        a.page-header__logo Логотип
+    +positioner('header').header
+        +logo
         +navigation

@@ -1,10 +1,12 @@
 extends ../layouts/default.pug
 
 include ../components/header/header
+include ../components/positioner/positioner
 
 block head
     title Document Title
 
 block body
     +header
-    h1 Заголовок
+    +positioner
+        h1 Заголовок

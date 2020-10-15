@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "name": "weboops-example",
+    "scripts": {
+        "build": "weboops --mode build",
+        "dev": "weboops --mode development"
+    },
+    "dependencies": {
+        "@weboops/core": "0.0.1"
+    }
+}

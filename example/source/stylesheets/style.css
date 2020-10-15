@@ -1,3 +1,5 @@
 @import '../layouts/default.css';
+@import '../components/positioner/positioner.css';
 @import '../components/header/header.css';
+@import '../components/logo/logo.css';
 @import '../components/navigation/navigation.css';
