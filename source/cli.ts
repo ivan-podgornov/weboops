@@ -6,12 +6,14 @@ import type { Options } from './config/context';
 
 program
     .option('-m, --mode <build|development>', 'build or development')
+    .option('-s, --source <path>', 'weboops sources', './source/')
     .option('--publicPath <path>', 'webpack public path', '/')
     .parse(process.argv);
 
 const options: Options = {
     mode: program.opts().mode,
     publicPath: program.opts().publicPath as string,
+    source: program.opts().source as string,
 };
 
 if (!['build', 'development'].includes(options.mode)) {

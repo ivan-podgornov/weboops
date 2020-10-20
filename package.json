@@ -1,6 +1,6 @@
 {
   "name": "@weboops/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Compiler for simple frontend applications",
   "author": "ivan-podgornov",
   "bin": {

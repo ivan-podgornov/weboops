@@ -11,16 +11,13 @@ export function getLoaders(context: Context) {
 };
 
 function files(context: Context) {
-    const dirname = path.basename(context.publicPath);
-
     return {
         test: /\.(svg|png|jpe?g)$/,
         use: {
             loader: 'file-loader',
             options: {
                 name: 'images/[path][name].[ext]',
-                outputPath: `${dirname}`,
-                publicPath: context.publicPath.replace(/^\./, '..'),
+                publicPath: context.publicPath,
             },
         },
     };

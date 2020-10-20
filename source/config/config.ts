@@ -6,13 +6,14 @@ import type { Configuration } from 'webpack';
 
 export const createConfig = (options: Options): Configuration => {
     const context = resolveContext(options);
-    const { cwd, sourcesPath } = context;
+    const { cwd, source } = context;
 
     return {
+        context: source,
         mode: 'development',
 
         entry: {
-            styles: path.resolve(sourcesPath, './stylesheets/style.css'),
+            styles: path.resolve(source, './stylesheets/style.css'),
         },
 
         optimization: {
@@ -21,7 +22,7 @@ export const createConfig = (options: Options): Configuration => {
 
         output: {
             filename: 'scripts/[name].js',
-            path: path.resolve(sourcesPath, '../docs/'),
+            path: path.resolve(source, '../docs/'),
             publicPath: options.publicPath,
         },
 
@@ -33,9 +34,9 @@ export const createConfig = (options: Options): Configuration => {
 
         resolve: {
             alias: {
-                components: path.resolve(sourcesPath, './components/'),
-                layouts: path.resolve(sourcesPath, './layouts/'),
-                pages: path.resolve(sourcesPath, './pages/'),
+                components: path.resolve(source, './components/'),
+                layouts: path.resolve(source, './layouts/'),
+                pages: path.resolve(source, './pages/'),
             },
         },
 

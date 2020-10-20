@@ -22,16 +22,12 @@ export function getPlugins(context: Context) {
 }
 
 function buildPlugins(context: Context) {
-    const output = context.publicPath.startsWith('.')
-        ? `./docs/${context.publicPath.slice(1)}`
-        : `./docs/${context.publicPath}`
-
     return [
         new CopyWebpackPlugin({
             patterns: [{
                 noErrorOnMissing: true,
-                from: path.resolve(context.cwd, './static'),
-                to: path.resolve(context.cwd, output),
+                from: path.resolve(context.source, '../static/'),
+                to: path.resolve(context.source, '../docs/static/'),
             }],
         }),
     ];
@@ -39,14 +35,13 @@ function buildPlugins(context: Context) {
 
 function getHtmlPlugins(context: Context) {
     try {
-        const pagesFolder = path.resolve(context.sourcesPath, './pages/');
+        const pagesFolder = path.resolve(context.source, './pages/');
         const pages = fs.readdirSync(pagesFolder)
             .filter((filename) => path.extname(filename) === '.pug');
 
         return pages.map((filename) => new HTMLWebpackPlugin({
             filename: path.basename(filename, path.extname(filename)) + '.html',
             template: path.resolve(pagesFolder, `./${filename}`),
-            publicPath: context.publicPath.startsWith('/') ? '/' : './',
         }));
     } catch (error) {
         if (error.code === 'ENOENT') return [];
