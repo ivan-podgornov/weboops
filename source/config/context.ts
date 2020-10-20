@@ -8,6 +8,13 @@ export type Options = {
      */
     mode: WeboopsMode,
 
+    /**
+     * Directory where weboops output build files. It can be both relative and
+     * absolute path. If it's relative, means that relative from directory where
+     * user run weboops.
+     */
+    output?: string;
+
     /** Path that will be used for webpack public path */
     publicPath?: string,
 
@@ -24,18 +31,24 @@ export type Options = {
 export type Context = {
     cwd: string,
     mode: WeboopsMode,
+    output: string,
     publicPath: string,
     source: string,
 };
 
 export function resolveContext(options: Options): Context {
     const cwd = process.cwd();
-    const source = resolveSourcesDir(cwd, options);
+    const output = getDirectory(cwd, './dist/', options.output);
+    const source = getDirectory(cwd, './source/', options.source);
     const { mode, publicPath = '/' } = options;
-    return { cwd, source, mode, publicPath };
+
+    return {
+        cwd, source, mode,
+        output, publicPath,
+    };
 };
 
-function resolveSourcesDir(cwd: string, options: Options) {
-    const source = options.source || path.resolve(cwd, './source');
-    return path.isAbsolute(source) ? source : path.resolve(cwd, source);
+function getDirectory(cwd: string, def: string, pathLike?: string) {
+    const dir = pathLike || path.resolve(cwd, def);
+    return path.isAbsolute(dir) ? dir : path.resolve(cwd, dir);
 }

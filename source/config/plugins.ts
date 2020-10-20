@@ -27,7 +27,7 @@ function buildPlugins(context: Context) {
             patterns: [{
                 noErrorOnMissing: true,
                 from: path.resolve(context.source, '../static/'),
-                to: path.resolve(context.source, '../docs/static/'),
+                to: context.output,
             }],
         }),
     ];

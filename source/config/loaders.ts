@@ -1,4 +1,3 @@
-import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { Context } from './context';
 

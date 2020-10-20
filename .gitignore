@@ -1,5 +1,5 @@
 .DS_Store
 /node_modules/
 /dist/
-/example/docs/
+/example/dist/
 /example/node_modules/

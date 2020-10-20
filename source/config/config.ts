@@ -22,8 +22,8 @@ export const createConfig = (options: Options): Configuration => {
 
         output: {
             filename: 'scripts/[name].js',
-            path: path.resolve(source, '../docs/'),
-            publicPath: options.publicPath,
+            path: context.output,
+            publicPath: context.publicPath,
         },
 
         module: {
