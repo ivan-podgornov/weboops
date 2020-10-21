@@ -28,9 +28,13 @@ export class RewriteHtmlUrlsPlugin {
     }
 
     rewriteUrls(data: HtmlPluginData, callback: BeforeEmitCallback) {
-        const regexp = /<img (.*?)?src="\//gm;
+        const regexp = /(?<tag>a|img) (?<between>.*?)?(?<attr>src|href)="\//gm;
         const publicPath = this.options.publicPath;
-        const html = data.html.replace(regexp, `<img $1src="${publicPath}`);
+        const html = data.html.replace(
+            regexp,
+            `$<tag> $<between>$<attr>="${publicPath}`,
+        );
+
         return callback(null, { ...data, html });
     }
 }
