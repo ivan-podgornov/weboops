@@ -1,6 +1,6 @@
 {
   "name": "@weboops/core",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Compiler for simple frontend applications",
   "author": "ivan-podgornov",
   "bin": {
@@ -9,6 +9,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
+    "build:example": "npm run build && node dist/cli.js -m build -s ./example/source -o ./example/dist --publicPath /example/",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {

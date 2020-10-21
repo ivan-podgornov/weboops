@@ -10,12 +10,14 @@ export function getLoaders(context: Context) {
 };
 
 function files(context: Context) {
+    const hash = context.mode === 'build' ? '-[contenthash]' : '';
+
     return {
         test: /\.(svg|png|jpe?g)$/,
         use: {
             loader: 'file-loader',
             options: {
-                name: 'images/[path][name].[ext]',
+                name: `images/[path]/[name]${hash}.[ext]`,
                 publicPath: context.publicPath,
             },
         },

@@ -21,7 +21,9 @@ export const createConfig = (options: Options): Configuration => {
         },
 
         output: {
-            filename: 'scripts/[name].js',
+            filename: context.mode === 'build'
+                ? 'scripts/[name]-[contenthash].js'
+                : 'scripts/[name].js',
             path: context.output,
             publicPath: context.publicPath,
         },

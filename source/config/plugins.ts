@@ -9,10 +9,12 @@ import { RewriteHtmlUrlsPlugin } from '../rewrite-html-urls-plugin';
 import { Context } from './context';
 
 export function getPlugins(context: Context) {
+    const hash = context.mode === 'build' ? '-[contenthash]' : '';
+
     return [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'stylesheets/style.css',
+            filename: `stylesheets/[name]${hash}.css`,
             ignoreOrder: true,
         }) as WebpackPluginInstance,
         new RewriteHtmlUrlsPlugin(context),
