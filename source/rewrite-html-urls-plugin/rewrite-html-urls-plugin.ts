@@ -27,14 +27,19 @@ export class RewriteHtmlUrlsPlugin {
         });
     }
 
-    rewriteUrls(data: HtmlPluginData, callback: BeforeEmitCallback) {
-        const regexp = /(?<tag>a|img) (?<between>.*?)?(?<attr>src|href)="\//gm;
+    rewriteUrls(data: HtmlPluginData, callback: BeforeEmitCallback): void {
         const publicPath = this.options.publicPath;
-        const html = data.html.replace(
-            regexp,
-            `$<tag> $<between>$<attr>="${publicPath}`,
+        const regexp = new RegExp(
+            `(?<tag>a|img) (?<between>.*?)?(?<attr>src|href)="\/(?!${publicPath.slice(1)})`,
+            'gm',
         );
+        const html = data.html.replace(regexp, `$<tag> $<between>$<attr>="${publicPath}`);
+        const newData = { ...data, html };
 
-        return callback(null, { ...data, html });
+        if (regexp.test(newData.html)) {
+            return this.rewriteUrls(newData, callback);
+        }
+
+        callback(null, newData);
     }
 }
