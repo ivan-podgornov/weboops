@@ -13,6 +13,7 @@ export const createConfig = (options: Options): Configuration => {
         mode: 'development',
 
         entry: {
+            main: path.resolve(source, './javascript/main.js'),
             styles: path.resolve(source, './stylesheets/style.css'),
         },
 
