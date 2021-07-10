@@ -6,6 +6,7 @@ export function getLoaders(context: Context) {
         files(context),
         pug(),
         css(),
+        sass(),
     ];
 };
 
@@ -45,6 +46,22 @@ function css() {
                 loader: 'css-loader',
                 options: {
                     url: (url: string) => !url.startsWith('/'),
+                },
+            },
+        ],
+    };
+}
+
+function sass() {
+    const { use: cssUse } = css();
+    return {
+        test: /\.scss$/,
+        use: [
+            ...cssUse,
+            {
+                loader: 'sass-loader',
+                options: {
+                    implementation: require('sass'),
                 },
             },
         ],
