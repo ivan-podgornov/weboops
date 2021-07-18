@@ -1,5 +1,6 @@
 import path from 'path';
 import { resolveContext, Options } from './context';
+import { entry } from './entry';
 import { getLoaders } from './loaders';
 import { getPlugins } from './plugins';
 import type { Configuration } from 'webpack';
@@ -11,11 +12,7 @@ export const createConfig = (options: Options): Configuration => {
     return {
         context: source,
         mode: 'development',
-
-        entry: {
-            main: path.resolve(source, './javascript/main.js'),
-            styles: path.resolve(source, './stylesheets/style.css'),
-        },
+        entry: entry(source),
 
         optimization: {
             emitOnErrors: true,
