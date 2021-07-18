@@ -30,7 +30,7 @@ export class RewriteHtmlUrlsPlugin {
     rewriteUrls(data: HtmlPluginData, callback: BeforeEmitCallback): void {
         const publicPath = this.options.publicPath;
         const regexp = new RegExp(
-            `(?<tag>a|img) (?<between>.*?)?(?<attr>src|href)="\/(?!${publicPath.slice(1)})`,
+            `(?<tag>a|img|video) (?<between>.*?)?(?<attr>src|href)="\/(?!${publicPath.slice(1)})`,
             'gm',
         );
         const html = data.html.replace(regexp, `$<tag> $<between>$<attr>="${publicPath}`);
