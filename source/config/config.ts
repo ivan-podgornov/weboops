@@ -1,4 +1,6 @@
 import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+
 import { resolveContext, Options } from './context';
 import { entry } from './entry';
 import { getLoaders } from './loaders';
@@ -16,6 +18,8 @@ export const createConfig = (options: Options): Configuration => {
 
         optimization: {
             emitOnErrors: true,
+            minimize: context.mode === 'build',
+            minimizer: [new TerserPlugin()],
         },
 
         output: {
