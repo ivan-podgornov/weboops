@@ -5,8 +5,8 @@ export function getLoaders(context: Context) {
     return [
         files(context),
         pug(),
-        css(),
-        sass(),
+        css(context),
+        sass(context),
     ];
 };
 
@@ -37,7 +37,14 @@ function pug() {
     };
 }
 
-function css() {
+function css(context: Context) {
+    const postcssPlugins = [];
+    if (context.mode === 'build') {
+        postcssPlugins.push(require('cssnano')({
+            preset: 'default',
+        }));
+    }
+
     return {
         test: /\.css$/,
         use: [
@@ -48,12 +55,20 @@ function css() {
                     url: (url: string) => !url.startsWith('/'),
                 },
             },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    postcssOptions: {
+                        plugins: postcssPlugins,
+                    },
+                },
+            },
         ],
     };
 }
 
-function sass() {
-    const { use: cssUse } = css();
+function sass(context: Context) {
+    const { use: cssUse } = css(context);
     return {
         test: /\.scss$/,
         use: [

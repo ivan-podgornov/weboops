@@ -1,6 +1,6 @@
 {
   "name": "@weboops/core",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Compiler for simple frontend applications",
   "author": "ivan-podgornov",
   "bin": {
@@ -17,9 +17,11 @@
     "commander": "^6.1.0",
     "copy-webpack-plugin": "^6.2.1",
     "css-loader": "^5.0.0",
+    "cssnano": "^5.0.8",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.0.0",
+    "postcss-loader": "^6.1.1",
     "pug": "^3.0.0",
     "pug-loader": "^2.4.0",
     "sass": "^1.35.2",
