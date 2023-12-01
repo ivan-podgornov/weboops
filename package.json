@@ -22,13 +22,13 @@
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.0.0",
     "postcss-loader": "^6.1.1",
-    "pug": "^3.0.0",
-    "pug-loader": "^2.4.0",
+    "pug": "^3.0.2",
+    "pug-loader": "^1.0.2",
     "sass": "^1.35.2",
     "sass-loader": "^12.1.0",
     "terser-webpack-plugin": "^5.2.4",
-    "webpack": "^5.1.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "5.76.0",
+    "webpack-dev-server": "^4.15.1"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
