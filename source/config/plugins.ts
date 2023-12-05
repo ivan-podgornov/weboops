@@ -9,7 +9,7 @@ import { RewriteHtmlUrlsPlugin } from '../rewrite-html-urls-plugin';
 import { Context } from './context';
 
 export function getPlugins(context: Context) {
-    const hash = context.mode === 'build' ? '-[contenthash]' : '';
+    const hash = context.mode === 'build' && context.filesHashingEnabled ? '-[contenthash]' : '';
 
     return [
         new CleanWebpackPlugin(),
@@ -46,7 +46,7 @@ function getHtmlPlugins(context: Context) {
             template: path.resolve(pagesFolder, `./${filename}`),
         }));
     } catch (error) {
-        if (error.code === 'ENOENT') return [];
+        if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return [];
         throw error;
     }
 }

@@ -9,6 +9,7 @@ program
     .option('-s, --source <path>', 'weboops sources', './source/')
     .option('-o, --output <path>', 'weboops outputs', './dist/')
     .option('--publicPath <path>', 'webpack public path', '/')
+    .option('--filesHashingEnabled <boolean>', 'If true, files created by build will be created with hashes. For example file.fjskdwr.js', true)
     .parse(process.argv);
 
 const options: Options = {

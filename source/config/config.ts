@@ -1,4 +1,5 @@
 import path from 'path';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 
 import { resolveContext, Options } from './context';
@@ -19,11 +20,21 @@ export const createConfig = (options: Options): Configuration => {
         optimization: {
             emitOnErrors: true,
             minimize: context.mode === 'build',
-            minimizer: [new TerserPlugin()],
+            minimizer: [
+                new TerserPlugin(),
+                new CssMinimizerPlugin({
+                    minimizerOptions: {
+                        preset: [
+                            "default",
+                            { discardComments: { removeAll: true } },
+                        ],
+                    },
+                }),
+            ],
         },
 
         output: {
-            filename: context.mode === 'build'
+            filename: context.mode === 'build' && context.filesHashingEnabled
                 ? 'scripts/[name]-[contenthash].js'
                 : 'scripts/[name].js',
             path: context.output,
@@ -45,7 +56,9 @@ export const createConfig = (options: Options): Configuration => {
         },
 
         devServer: {
-            contentBase: path.resolve(cwd, './static/'),
+            static: {
+                directory: path.resolve(cwd, './static/'),
+            },
         },
     };
 };

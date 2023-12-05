@@ -5,20 +5,18 @@ export function getLoaders(context: Context) {
     return [
         files(context),
         pug(),
-        css(context),
-        sass(context),
+        css(),
+        sass(),
     ];
 };
 
 function files(context: Context) {
-    const hash = context.mode === 'build' ? '-[contenthash]' : '';
-
     return {
         test: /\.(svg|png|jpe?g)$/,
         use: {
             loader: 'file-loader',
             options: {
-                name: `images/[path]/[name]${hash}.[ext]`,
+                name: `images/[path]/[name].[ext]`,
                 publicPath: context.publicPath,
             },
         },
@@ -37,14 +35,7 @@ function pug() {
     };
 }
 
-function css(context: Context) {
-    const postcssPlugins = [];
-    if (context.mode === 'build') {
-        postcssPlugins.push(require('cssnano')({
-            preset: 'default',
-        }));
-    }
-
+function css() {
     return {
         test: /\.css$/,
         use: [
@@ -52,23 +43,23 @@ function css(context: Context) {
             {
                 loader: 'css-loader',
                 options: {
-                    url: (url: string) => !url.startsWith('/'),
+                    url: {
+                        filter: (url: string) => !url.startsWith('/'),
+                    },
                 },
             },
             {
                 loader: 'postcss-loader',
                 options: {
-                    postcssOptions: {
-                        plugins: postcssPlugins,
-                    },
+                    postcssOptions: {},
                 },
             },
         ],
     };
 }
 
-function sass(context: Context) {
-    const { use: cssUse } = css(context);
+function sass() {
+    const { use: cssUse } = css();
     return {
         test: /\.scss$/,
         use: [

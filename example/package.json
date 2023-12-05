@@ -2,7 +2,7 @@
     "private": true,
     "name": "weboops-example",
     "scripts": {
-        "build": "weboops --mode build",
+        "build": "weboops --mode build --filesHashingEnabled=false",
         "dev": "weboops --mode development"
     },
     "dependencies": {

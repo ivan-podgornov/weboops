@@ -22,8 +22,8 @@ export const run = (options: Options) => {
             break;
         }
         case 'development': {
-            const server = new WebpackDevServer(compiler, config.devServer);
-            server.listen(3000);
+            const server = new WebpackDevServer(config.devServer, compiler);
+            server.listen(3000, 'localhost', () => console.log('dev server is starting on the http://localhost:3000'));
             break;
         }
     }

@@ -26,9 +26,16 @@ export type Options = {
      * where from user run weboops.
      */
     source?: string,
+
+    /**
+     * If true, files created by build will be created with hashes. For example file.fjskdwr.js
+     * @default true
+     */
+    filesHashingEnabled?: boolean;
 }
 
 export type Context = {
+    filesHashingEnabled: boolean;
     cwd: string,
     mode: WeboopsMode,
     output: string,
@@ -40,10 +47,10 @@ export function resolveContext(options: Options): Context {
     const cwd = process.cwd();
     const output = getDirectory(cwd, './dist/', options.output);
     const source = getDirectory(cwd, './source/', options.source);
-    const { mode, publicPath = '/' } = options;
+    const { mode, publicPath = '/', filesHashingEnabled = false } = options;
 
     return {
-        cwd, source, mode,
+        filesHashingEnabled, cwd, source, mode,
         output, publicPath,
     };
 };

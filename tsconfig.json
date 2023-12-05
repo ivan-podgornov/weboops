@@ -1,5 +1,4 @@
 {
-    "exclude": ["node_modules"],
     "compilerOptions": {
         "esModuleInterop": true,
         "outDir": "dist",
@@ -9,5 +8,7 @@
         "skipLibCheck": true,
         "strict": true,
         "target": "ES2017"
-    }
+    },
+    "exclude": ["node_modules"],
+    "include": ["./source/"]
 }
