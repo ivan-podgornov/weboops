@@ -8,8 +8,8 @@ export const entry = (sourcePath: string): Entry => {
     };
 
     const styles = [
-        path.resolve(sourcePath, './stylesheets/style.css'),
-        path.resolve(sourcePath, './stylesheets/style.scss'),
+        path.resolve(sourcePath, './stylesheets/main.css'),
+        path.resolve(sourcePath, './stylesheets/main.scss'),
     ].filter((filename) => fs.existsSync(filename)) as [string, string];
 
     if (styles.length) entry.styles = styles;
